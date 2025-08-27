@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+:root {
+    --primary-color: #293240;
+    --secondary-color: #0b131e;
+    --white-color: white;
+}
+
+body {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+}
+
+.primary-background {
+    background-color: var(--primary-color);
+}
+
+.navu {
+    background-color: var(--secondary-color);
+}
+
+nav .search-input {
+    background-color: var(--primary-color);
+    border: none;
+    color: white;
+}
+
+nav .search-input::placeholder {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+nav .search-input:focus {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+@media (min-width: 768px) {
+  .border-md-end {
+    border-right: 1px solid #dee2e6; /* matches Bootstrap default */
+  }
+}
+
+.daily-forecast-icon{
+    max-width: 50px;
+}
+

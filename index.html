@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather App</title>
+    <link rel="shortcut icon" href="./asset/logo.png" type="image/x-icon">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+        
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Navbar starts -->
+
+    <nav class="navbar navbar-expand-lg text-white p-3 navu w-100 position-sticky top-0 z-3">
+        <div class="container">
+            <div class="d-flex flex-row align-items-center">
+                <img src="./asset/logo.png" class="img-fluid" style="width: 50px;" alt="">
+                <span>Weather App</span>
+            </div>
+
+            <form class="search-box d-flex ms-auto align-items-center w-50" role="search">
+                <input id="input-cityname" class="search-input form-control" type="search"
+                    placeholder="Search for cities" aria-label="Search">
+            </form>
+        </div>
+    </nav>
+
+
+    <section class="main-section section text-white my-2">
+        <div class="container">
+            <div class="row gx-md-3 align-items-stretch justify-content-between">
+                <!-- Today's Forecast -->
+                <div class="col-12 col-lg-8">
+                    <div class="row g-0">
+                        <!-- Present Forecast -->
+                        <div class="col-12">
+                            <div class="current-forecast">
+                                <div class="row g-0 p-4 justify-content-between align-items-stretch">
+                                    <div class="col-6">
+                                        <div class="d-flex flex-column justify-content-between h-100">
+                                            <div class="d-flex flex-column gap-1 ">
+                                                <span id="cityname" class="fs-3 fw-bold">City</span>
+                                                <span id="possibility" class="text-white text-opacity-75">Rain Chances:
+                                                    <span id="rain-chances-text"> 0</span>%</span>
+                                            </div>
+                                            <span class="fs-1 fw-bold"><span
+                                                    id="current-temperature">0</span>&deg;C</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 d-flex justify-content-center align-items-center">
+                                        <img id="weather-icon" src="./asset/weatherSvg/snow-showers-day.svg"
+                                            class="h-100" style="width: 300px;" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Hourly Forecast -->
+                        <div class="col-12 p-4 primary-background mb-3 text-light rounded-4 fw-bold">
+                            <span class="text-white text-opacity-75 fs-6 fw-medium">TODAY'S FORECAST</span>
+
+
+                            <div class="row g-0 gy-3">
+                                <div id="hourlyForecastCarousel" class="carousel slide" data-bs-wrap="false">
+                                    <div class="carousel-inner hourly-forecast-items">
+                                        <!-- Slides will be inserted dynamically here -->
+                                    </div>
+
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#hourlyForecastCarousel" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon"></span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#hourlyForecastCarousel" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon"></span>
+                                    </button>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <!-- Climate Conditions -->
+                        <div class="col-12 p-4 primary-background mb-3 text-light rounded-4">
+                            <div class="row ">
+                                <span class="fw-medium text-white text-opacity-75 pb-2">AIR CONDITIONS</span>
+                                <div class="col-6">
+                                    <div class="d-flex flex-column pt-3">
+                                        <div class="d-flex gap-1">
+                                            <svg viewBox="0 0 256 512"
+                                                style="width: 24px; height: 24px; overflow: visible; opacity: 1; z-index: 1; fill: rgb(147, 153, 162);">
+                                                <path
+                                                    d="M192 384c0 35.346-28.654 64-64 64s-64-28.654-64-64c0-23.685 12.876-44.349 32-55.417V224c0-17.673 14.327-32 32-32s32 14.327 32 32v104.583c19.124 11.068 32 31.732 32 55.417zm32-84.653c19.912 22.563 32 52.194 32 84.653 0 70.696-57.303 128-128 128-.299 0-.609-.001-.909-.003C56.789 511.509-.357 453.636.002 383.333.166 351.135 12.225 321.755 32 299.347V96c0-53.019 42.981-96 96-96s96 42.981 96 96v203.347zM208 384c0-34.339-19.37-52.19-32-66.502V96c0-26.467-21.533-48-48-48S80 69.533 80 96v221.498c-12.732 14.428-31.825 32.1-31.999 66.08-.224 43.876 35.563 80.116 79.423 80.42L128 464c44.112 0 80-35.888 80-80z">
+                                                </path>
+                                            </svg>
+                                            <span class="text-white text-opacity-75">Real Feel</span>
+                                        </div>
+                                        <span class="fw-bold fs-3 ps-4"><span id="real-feel">30</span> &deg;C</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex flex-column pt-3">
+                                        <div class="d-flex gap-1">
+                                            <svg viewBox="0 0 512 512"
+                                                style="width: 24px; height: 24px; overflow: visible; opacity: 1; z-index: 1; fill: rgb(147, 153, 162);">
+                                                <path
+                                                    d="M156.7 256H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h142.2c15.9 0 30.8 10.9 33.4 26.6 3.3 20-12.1 37.4-31.6 37.4-14.1 0-26.1-9.2-30.4-21.9-2.1-6.3-8.6-10.1-15.2-10.1H81.6c-9.8 0-17.7 8.8-15.9 18.4 8.6 44.1 47.6 77.6 94.2 77.6 57.1 0 102.7-50.1 95.2-108.6C249 291 205.4 256 156.7 256zM16 224h336c59.7 0 106.8-54.8 93.8-116.7-7.6-36.2-36.9-65.5-73.1-73.1-55.4-11.6-105.1 24.9-114.9 75.5-1.9 9.6 6.1 18.3 15.8 18.3h32.8c6.7 0 13.1-3.8 15.2-10.1C325.9 105.2 337.9 96 352 96c19.4 0 34.9 17.4 31.6 37.4-2.6 15.7-17.4 26.6-33.4 26.6H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16zm384 32H243.7c19.3 16.6 33.2 38.8 39.8 64H400c26.5 0 48 21.5 48 48s-21.5 48-48 48c-17.9 0-33.3-9.9-41.6-24.4-2.9-5-8.7-7.6-14.5-7.6h-33.8c-10.9 0-19 10.8-15.3 21.1 17.8 50.6 70.5 84.8 129.4 72.3 41.2-8.7 75.1-41.6 84.7-82.7C526 321.5 470.5 256 400 256z">
+                                                </path>
+                                            </svg>
+                                            <span class="text-white text-opacity-75">Wind</span>
+                                        </div>
+                                        <span class="fw-bold fs-3 ps-4"><span id="wind-speed">0.2</span> km/h</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex flex-column pt-3">
+                                        <div class="d-flex gap-1">
+                                            <svg viewBox="0 0 352 512"
+                                                style="width: 24px; height: 24px; overflow: visible; opacity: 1; z-index: 1; fill: rgb(147, 153, 162);">
+                                                <path
+                                                    d="M205.22 22.09c-7.94-28.78-49.44-30.12-58.44 0C100.01 179.85 0 222.72 0 333.91 0 432.35 78.72 512 176 512s176-79.65 176-178.09c0-111.75-99.79-153.34-146.78-311.82zM176 448c-61.75 0-112-50.25-112-112 0-8.84 7.16-16 16-16s16 7.16 16 16c0 44.11 35.89 80 80 80 8.84 0 16 7.16 16 16s-7.16 16-16 16z">
+                                                </path>
+                                            </svg>
+                                            <span class="text-white text-opacity-75">Chances of Rain</span>
+                                        </div>
+                                        <span class="fw-bold fs-3 ps-4">
+                                            <span id="rain-chances">10</span>
+                                            %</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex flex-column pt-3">
+                                        <div class="d-flex gap-1">
+                                            <svg viewBox="0 0 512 512"
+                                                style="width: 24px; height: 24px; overflow: visible; opacity: 1; z-index: 1; fill: rgb(147, 153, 162);">
+                                                <path
+                                                    d="M256 160c-52.9 0-96 43.1-96 96s43.1 96 96 96 96-43.1 96-96-43.1-96-96-96zm246.4 80.5l-94.7-47.3 33.5-100.4c4.5-13.6-8.4-26.5-21.9-21.9l-100.4 33.5-47.4-94.8c-6.4-12.8-24.6-12.8-31 0l-47.3 94.7L92.7 70.8c-13.6-4.5-26.5 8.4-21.9 21.9l33.5 100.4-94.7 47.4c-12.8 6.4-12.8 24.6 0 31l94.7 47.3-33.5 100.5c-4.5 13.6 8.4 26.5 21.9 21.9l100.4-33.5 47.3 94.7c6.4 12.8 24.6 12.8 31 0l47.3-94.7 100.4 33.5c13.6 4.5 26.5-8.4 21.9-21.9l-33.5-100.4 94.7-47.3c13-6.5 13-24.7.2-31.1zm-155.9 106c-49.9 49.9-131.1 49.9-181 0-49.9-49.9-49.9-131.1 0-181 49.9-49.9 131.1-49.9 181 0 49.9 49.9 49.9 131.1 0 181z">
+                                                </path>
+                                            </svg>
+                                            <span class="text-white text-opacity-75">UV Index</span>
+                                        </div>
+                                        <span class="fw-bold fs-3 ps-4" id="uv-index">3</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Forecast 7 days -->
+
+                <div class="col-12 col-lg-4">
+                    <div class="p-4 primary-background mb-3 text-light rounded-4 fw-medium ">
+                        <p class="text-white text-opacity-75  mb-3">7-DAY FORECAST</p>
+                        <div class="daily-forecast-items d-flex flex-column gap-2">
+
+                            <!-- Sample Data -->
+                            <div class="d-flex align-items-center py-1 daily-forecast-row">
+                                <div class="flex-shrink-0 day-name" style="width: 80px;"><span
+                                        class=" fw-light">Thursday</span></div>
+                                <div class="flex-grow-1 d-flex justify-content-center gap-2 align-items-center">
+                                    <img src="./asset/logo.svg" class="img-fluid daily-forecast-icon">
+
+                                </div>
+                                <div class="flex-shrink-0 temp text-end" style="width: 60px;">
+                                    36&deg;<span class="text-secondary text-opacity-75">/22&deg;</span>
+                                </div>
+                            </div>
+
+                            <hr class="text-light bg-light">
+                            <div class="d-flex align-items-center py-1 daily-forecast-row">
+                                <div class="flex-shrink-0 day-name" style="width: 80px;">Thursday</div>
+                                <div class="flex-grow-1 d-flex justify-content-center gap-2 align-items-center">
+                                    <img src="./asset/logo.svg" class="img-fluid daily-forecast-icon">
+
+                                </div>
+                                <div class="flex-shrink-0 temp text-end" style="width: 60px;">
+                                    36&deg;<span class="text-secondary text-opacity-75">/22&deg;</span>
+                                </div>
+                            </div>
+                            <hr class="text-light bg-light">
+                            <div class="d-flex align-items-center py-1 daily-forecast-row">
+                                <div class="flex-shrink-0 day-name" style="width: 80px;">Friday</div>
+                                <div class="flex-grow-1 d-flex justify-content-center gap-2 align-items-center">
+                                    <img src="./asset/logo.svg" class="img-fluid daily-forecast-icon">
+
+                                </div>
+                                <div class="flex-shrink-0 temp text-end" style="width: 60px;">
+                                    36&deg;<span class="text-secondary text-opacity-75">/22&deg;</span>
+                                </div>
+                            </div>
+                            <hr class="text-light bg-light">
+                            <div class="d-flex align-items-center py-1 daily-forecast-row">
+                                <div class="flex-shrink-0 day-name" style="width: 80px;">Saturday</div>
+                                <div class="flex-grow-1 d-flex justify-content-center gap-2 align-items-center">
+                                    <img src="./asset/logo.svg" class="img-fluid daily-forecast-icon">
+
+                                </div>
+                                <div class="flex-shrink-0 temp text-end" style="width: 60px;">
+                                    36&deg;<span class="text-secondary text-opacity-75">/22&deg;</span>
+                                </div>
+                            </div>
+                            <hr class="text-light bg-light">
+                            <div class="d-flex align-items-center py-1 daily-forecast-row">
+                                <div class="flex-shrink-0 day-name" style="width: 80px;">Sunday</div>
+                                <div class="flex-grow-1 d-flex justify-content-center gap-2 align-items-center">
+                                    <img src="./asset/logo.svg" class="img-fluid daily-forecast-icon">
+
+                                </div>
+                                <div class="flex-shrink-0 temp text-end" style="width: 60px;">
+                                    36&deg;<span class="text-secondary text-opacity-75">/22&deg;</span>
+                                </div>
+                            </div>
+                            <hr class="text-light bg-light">
+                            <div class="d-flex align-items-center py-1 daily-forecast-row">
+                                <div class="flex-shrink-0 day-name" style="width: 80px;">Monday</div>
+                                <div class="flex-grow-1 d-flex justify-content-center gap-2 align-items-center">
+                                    <img src="./asset/logo.svg" class="img-fluid daily-forecast-icon">
+
+                                </div>
+                                <div class="flex-shrink-0 temp text-end" style="width: 60px;">
+                                    36&deg;<span class="text-secondary text-opacity-75">/22&deg;</span>
+                                </div>
+                            </div>
+                            <hr class="text-light bg-light">
+                            <div class="d-flex align-items-center py-1 daily-forecast-row">
+                                <div class="flex-shrink-0 day-name" style="width: 80px;">Tuesday</div>
+                                <div class="flex-grow-1 d-flex justify-content-center gap-2 align-items-center">
+                                    <img src="./asset/logo.svg" class="img-fluid daily-forecast-icon">
+
+                                </div>
+                                <div class="flex-shrink-0 temp text-end" style="width: 60px;">
+                                    36&deg;<span class="text-secondary text-opacity-75">/22&deg;</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+    <script src="./script.js"></script>
+</body>
+</html>
