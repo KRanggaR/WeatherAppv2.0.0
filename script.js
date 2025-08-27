@@ -41,7 +41,6 @@ async function getCurrentWeather(cityname) {
         }
 
         const data = await response.json();
-        // console.log('1. Current Data is : ', data);
         weatherUI.spanCityDisplay.textContent = data.resolvedAddress.toUpperCase();
         weatherUI.currentTemp.textContent = data.currentConditions.temp;
         weatherUI.realFeel.textContent = data.currentConditions.feelslike;
@@ -51,7 +50,6 @@ async function getCurrentWeather(cityname) {
         weatherUI.rainChancesText.textContent = data.currentConditions.precipprob;
         weatherUI.weatherIcon.src = `./asset/weatherSvg/${data.currentConditions.icon}.svg`;
         defaultIcon = data.currentConditions.icon;
-        // console.log(`Finding LOGO :`, data.currentConditions.icon);
     }
     catch (error) {
         console.error('Error Fetching data : ', error);
@@ -76,9 +74,7 @@ async function getDailyHourlyWeather(cityname, icon) {
             throw new Error(`HTTP error! Status: ${response.status}`);
 
         }
-
         const data = await response.json();
-        // console.log(`Forecasted Data is : `,data.days.slice(0,2));
 
         // Hourly Forecast
         const currentTime = new Date();
@@ -89,7 +85,7 @@ async function getDailyHourlyWeather(cityname, icon) {
         let hours = forecast[0].hours.concat(forecast[1].hours).slice(hourIndex, hourIndex + 24);
         console.log(`Hours total are: `, hours);
 
-        const cardsPerSlide = 6; // how many cards per carousel slide
+        const cardsPerSlide = 6;                                           // how many cards per carousel slide
         let slideHTML = '';
         hourlyForecastContainer.innerHTML= '';
         hours.forEach((hour, index) => {
@@ -98,22 +94,25 @@ async function getDailyHourlyWeather(cityname, icon) {
             const hourDateTime = new Date(`${dayDate}T${hour.datetime}`);  //gives full date time
 
             // Format time as 12-hour AM/PM
-            let hourFormatted = hourDateTime.getHours();    //gives hour in 24hr
-            let ampm = hourFormatted >= 12 ? 'PM' : 'AM';   //gives am / pm
-            hourFormatted = hourFormatted % 12 || 12;       //gives hour in 12hr 
-            const timeText = `${hourFormatted}:00 ${ampm}`; //time text 12:00 AM
+            let hourFormatted = hourDateTime.getHours();                   //gives hour in 24hr
+            let ampm = hourFormatted >= 12 ? 'PM' : 'AM';                  //gives am / pm
+            hourFormatted = hourFormatted % 12 || 12;                      //gives hour in 12hr 
+            const timeText = `${hourFormatted}:00 ${ampm}`;                //time text 12:00 AM
 
+            // Remover border last card of each slide.
+            const borderClass = (index+1)%6 != 0 ? 'border-end border-1 border-secondary' : '';
+            
             // Card HTML
             slideHTML += `
                 <div class="col-4 col-md-2">
-                    <div class="same-day-card d-flex flex-column gap-2 pe-2 border-end border-1 border-secondary justify-content-between align-items-center p-2">
+                    <div class="same-day-card d-flex flex-column gap-2 pe-2 ${borderClass} justify-content-between align-items-center p-2">
                         <span class="text-white text-opacity-75">${timeText}</span>
                         <img src="./asset/weatherSvg/${hour.icon}.svg" alt="${hour.conditions}" class="img-fluid">
                         <span>${Math.round(hour.temp)}&deg;C</span>
                     </div>
                 </div>
             `;
-            // stores 6 cards and send them to new single slide and resets for next slide  (6+6+6+6)
+            // stores 6 cards and send them to new single slide and resets for next slide  (6+6+6+6=24)
 
             // Wrap cards in carousel-item when reaching cardsPerSlide or last card
             if ((index + 1) % cardsPerSlide === 0 || index === hours.length - 1) {     //checks for 6 or 24th card
@@ -131,8 +130,8 @@ async function getDailyHourlyWeather(cityname, icon) {
         });
 
         // Daily Forecast
-        // get first 7 days
-        const days = data.days.slice(0, 7);
+        
+        const days = data.days.slice(0, 7);    // gets first 7 days
         dailyForecastContainer.innerHTML = ''; // clear previous forecast
         days.forEach((day, index) => {
             let dayName;
@@ -146,8 +145,6 @@ async function getDailyHourlyWeather(cityname, icon) {
                 dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
                 dayIcon = day.icon;
             }
-
-            // let conditions = day.conditions.split(',')[0];
 
             const html = `
                 <div class="d-flex justify-content-between align-items-center py-1">
